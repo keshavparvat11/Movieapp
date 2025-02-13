@@ -16,8 +16,8 @@ fun MyNavigation() {
         composable(route = "home") {
             MainContent(navcontrolar)
         }
-        composable(route = "detail/{movie}") {
-            var name  =  it.arguments?.getString("movie") ?: "No Move"
+        composable(route = "detail/{movieid}") {
+            var name  =  it.arguments?.getString("movieid") ?: "No Move"
             Detail(name,navcontrolar)
         }
     }
