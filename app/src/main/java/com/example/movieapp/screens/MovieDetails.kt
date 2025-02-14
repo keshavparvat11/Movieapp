@@ -125,6 +125,7 @@ private fun DetailOfMovie(newMovie: List<Movie>) {
         )
         Text(text = "Movie Images", style = MaterialTheme.typography.headlineMedium)
         HorizomtalImageView(newMovie)
+
     }
 }
 @Composable
@@ -132,12 +133,12 @@ fun HorizomtalImageView(newMovie: List<Movie>) {
     LazyRow {
 
             items(newMovie[0].images.size) {
-                Card(modifier = Modifier.padding(12.dp).size(250.dp),elevation = CardDefaults.cardElevation(
+                Card(modifier = Modifier.padding(12.dp).size(350.dp),elevation = CardDefaults.cardElevation(
                     defaultElevation = 6.dp
                 )) {
                     Image(
                         painter = rememberImagePainter(data = newMovie[0].images[it]),
-                        contentDescription = "Movie Image are not show"
+                        contentDescription = "Movie Image are not show", modifier = Modifier.fillMaxSize()
                     )
 
                 }

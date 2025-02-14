@@ -20,6 +20,7 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -38,7 +39,7 @@ import com.example.movieapp.moviedata.getMovies
 //@Preview(showBackground = true)
 @Composable
 fun movieCard(movie :Movie = getMovies()[0], navController: NavController) {
-   var showDetails by remember { mutableStateOf(false) }
+   var showDetails = remember { mutableStateOf(false) }
     Card(modifier = Modifier.fillMaxWidth().padding(4.dp).clickable { navController.navigate("detail/${movie.id}") }) {
         Row(modifier = Modifier.padding(8.dp), verticalAlignment = Alignment.CenterVertically) {
 
@@ -59,13 +60,13 @@ fun movieCard(movie :Movie = getMovies()[0], navController: NavController) {
 }
 
 @Composable
-private fun MoreDetails(movie: Movie, showDetails: Boolean) {
-    var showDetails1 = showDetails
+private fun MoreDetails(movie: Movie, showDetails: MutableState<Boolean>) {
+
     Column(modifier = Modifier.padding(4.dp)) {
         Text(text = movie.title, modifier = Modifier.padding(8.dp), fontWeight = FontWeight.Bold)
         Text(text = "Director: ${movie.director}", modifier = Modifier)
         Text(text = "Released: ${movie.year}", modifier = Modifier)
-        AnimatedVisibility(showDetails1) {
+       AnimatedVisibility (showDetails.value) {
             Column(modifier = Modifier.padding(4.dp)) {
                 Divider()
                 Text(text = "Plot: ${movie.plot}", modifier = Modifier)
@@ -74,10 +75,10 @@ private fun MoreDetails(movie: Movie, showDetails: Boolean) {
 
             }
         }
-        Icon(imageVector = if (!showDetails1) Icons.Default.ArrowDropDown
+        Icon(imageVector = if (!showDetails.value) Icons.Default.ArrowDropDown
         else Icons.Default.KeyboardArrowUp,
             contentDescription = "Show Details",
-            modifier = Modifier.clickable { showDetails1 = !showDetails1 })
+            modifier = Modifier.clickable { showDetails.value = !showDetails.value })
 
     }
 }
